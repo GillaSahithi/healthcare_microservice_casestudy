@@ -6,7 +6,7 @@ services:
     image: mongo:latest
     container_name: mongo
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - ./data/mongo:/data/db
     networks:
@@ -16,7 +16,7 @@ services:
     image: mysql:latest
     container_name: mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: password
@@ -59,6 +59,20 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
     ports:
       - "8300:8300"
+    depends_on:
+      - mysql
+      - mongo
+    networks:
+      - mysql
+      - mongo
+    restart: always
+  discovery_service:
+    build: ./discovery-service
+    container_name: discovery-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "8761:8761"
     depends_on:
       - mysql
       - mongo
