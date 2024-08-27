@@ -9,4 +9,4 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
   server:
-    wait-time-in-ms: 500
+    wait-time-discin-ms: 500
